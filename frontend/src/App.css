@@ -1,0 +1,55 @@
+form{
+  min-width: 300px;
+}
+
+.App{
+  position: relative;
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+  margin: 0 auto;
+  background: rgb(241, 241, 241);
+  max-width: 500px;
+  min-height: 400px;
+  border-radius: 5px;
+  margin-top: 200px;
+  padding: 50px 15px;
+}
+
+.repo_details{
+  min-width: 350px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 5px;
+}
+.repo_details button{
+  margin-top: 20px;
+}
+
+.data_field_section{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.data_field_section span{
+  font-size: 15px;  
+}
+.titles_list{
+  padding: 0;  
+  margin: 0;
+  list-style: none;
+}
+.titles_list li{
+  font-size: 15px;
+}
+.loading_container{
+  background: rgba(0, 0, 0, 0.034);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top:0
+}
