@@ -1,31 +1,30 @@
 const GitRepository = require("../repositories/GitRepository");
-const ResponseDTO = require("../models/ResponseDTO")
+const Ok = require("../models/Ok");
+const InternalError = require("../models/InternalError");
 
 class GitService {
-    constructor(owner, repoName) {
-        this.owner = owner;
-        this.repoName = repoName
-    }
-
-    repository() {
-        return new GitRepository(this.owner, this.repoName)
-    }
 
     async details(owner, repoName) {
-        let gitRepository = new GitRepository(owner, repoName);
-        let response = new ResponseDTO(null, null, null, null).create();
+        const gitRepository = new GitRepository(owner, repoName);
+        
+        let averageResult = {}
+        let commitTitles = {}
+        let stars = {}
 
-        await gitRepository.getAverageCommitsPerWeek()
-            .then(result => response = Object.assign({}, result, { data: { ...response.data, ...result.data, owner, repoName } }))
-            .catch(e => response = Object.assign({}, e, { data: { ...response.data } }))
-        await gitRepository.getCommitTitles()
-            .then(result => response = Object.assign({}, result, { data: { ...response.data, ...result.data } }))
-            .catch(e => response = Object.assign({}, e, { data: { ...response.data } }))
-        await gitRepository.getStars()
-            .then(result => response = Object.assign({}, result, { data: { ...response.data, ...result.data } }))
-            .catch(e => response = Object.assign({}, e, { data: { ...response.data } }))
-
-        return response
+        try {
+            averageResult = await gitRepository.getAverageCommitsPerWeek();
+            commitTitles = await gitRepository.getCommitTitles();
+            stars = await gitRepository.getStars();
+            return new Ok({
+                repoName,
+                owner,
+                ...averageResult,
+                ...commitTitles,
+                ...stars
+            });
+        } catch(error) {
+            return new InternalError(error)
+        }
     }
 }
 

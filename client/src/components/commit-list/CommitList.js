@@ -1,6 +1,6 @@
 import React from 'react'
 
-function CommitList({ caption, listOfCommits }) {
+const CommitList = ({ caption, listOfCommits }) => {
     return (
         <ul className="titles_list">
             <h6>{caption}</h6>

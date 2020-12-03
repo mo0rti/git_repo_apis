@@ -1,7 +1,7 @@
 import React from 'react'
 import { CommitList, DataField } from "../../components"
 
-function RepoDetails({ repoDetails, reset }) {
+const RepoDetails = ({ repoDetails, reset }) => {
     return (
         <div className="repo_details">
             <DataField
