@@ -2,7 +2,7 @@ const Response = require("../models/Response")
 
 class NotFound extends Response {
   constructor() {
-    super(404, "Not Found");
+    super(false, "Data Not Found");
   }
 }
 

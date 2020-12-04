@@ -30,10 +30,10 @@ class GitRepository {
                                 body = JSON.parse(body);
 
                                 if (!Array.isArray(body)) {
-                                    throw new NotFound();
+                                    return reject(new NotFound());
                                 }
 
-                                let hasCommitValues = body.filter(item => item.total !== 0);
+                                const hasCommitValues = body.filter(item => item.total !== 0);
                                 hasCommitValues.map(commit => sum += commit.total);
                                 averageCommitsPerWeek = sum / 52.0;
                                 
@@ -42,13 +42,13 @@ class GitRepository {
                 });
             }
             catch (error) {
-                throw new InternalError(error)
+                return reject(new InternalError(error))
             }
         })
     }
 
     getCommitTitles() {
-        let numberOfLastCommits = 3
+        const numberOfLastCommits = 3
         return new Promise((resolve, reject) => {
             try {
                 https.get(`${API_BASE_URL}/repos/${this.owner}/${this.repoName}/commits`,
@@ -59,22 +59,21 @@ class GitRepository {
                             .setEncoding("utf8")
                             .on("data", data => body += data)
                             .on("end", () => {
-                                let lastCommitsTitles = []
                                 body = JSON.parse(body);
 
                                 if (!Array.isArray(body)) {
-                                    throw new NotFound();
+                                    return reject(new NotFound());
                                 }
 
-                                let filteredCommits = body.filter((commit, index) => index < numberOfLastCommits);
-                                lastCommitsTitles = filteredCommits.map(item => item.commit.message);
+                                const filteredCommits = body.filter((commit, index) => index < numberOfLastCommits);
+                                const lastCommitsTitles = filteredCommits.map(item => item.commit.message);
 
                                 return resolve({ lastCommitsTitles })
                             });
                 });
             }
             catch (error) {
-                throw new InternalError(error)
+                return reject(new InternalError(error))
             }
         })
     }
@@ -89,14 +88,11 @@ class GitRepository {
                         res
                             .setEncoding("utf8")
                             .on("data", data => body += data)
-                            .on("end", () => {
-                                    body = JSON.parse(body)                            
-                                    return resolve({ numberOfStars: body.stargazers_count })
-                                });
+                            .on("end", () => resolve({ numberOfStars: JSON.parse(body).stargazers_count }));
                 });
             }
             catch (error) {
-                throw new InternalError(error)
+                return reject(new InternalError(error))
             }
         })
     }

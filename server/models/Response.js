@@ -1,7 +1,7 @@
 class Response {
-    constructor(statusCode, statusMessage, data) {
-        this.statusCode = statusCode;
-        this.statusMessage = statusMessage;
+    constructor(isSucceed, message, data) {
+        this.isSucceed = isSucceed;
+        this.message = message;
         this.data = data;
     }
 }

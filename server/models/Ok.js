@@ -2,7 +2,7 @@ const Response = require("../models/Response")
 
 class Ok extends Response {
     constructor(data) {
-        super(200, "Success", data);
+        super(true, "Success", data);
     }
 }
 

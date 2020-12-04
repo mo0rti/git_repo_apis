@@ -8,12 +8,12 @@ const HttpClient = () => {
                     'Content-Type': 'application/json',
                 },
             }
-            return http(url, options)
+            return _http(url, options)
         }         
     };
 }
 
-const http = async (url, options) => {
+const _http = async (url, options) => {
     return fetch(url, options)
         .then(response => {
             try {                

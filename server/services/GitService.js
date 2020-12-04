@@ -1,6 +1,5 @@
 const GitRepository = require("../repositories/GitRepository");
 const Ok = require("../models/Ok");
-const InternalError = require("../models/InternalError");
 
 class GitService {
 
@@ -23,7 +22,7 @@ class GitService {
                 ...stars
             });
         } catch(error) {
-            return new InternalError(error)
+            return error
         }
     }
 }
